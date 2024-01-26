@@ -1,28 +1,51 @@
-import type { ListOfCountries } from '#build/components'; import type { Country
-} from '#build/components';
 <template>
-  List of countries component
-  <v-card v-for="country in countries" :key="country.name.official">
-    <h4>{{ country.name.official }}</h4>
-    <p>{{ country.population }}</p>
-    <p>{{ country.region }}</p>
-    <p>{{ country.capital }}</p>
-  </v-card>
-  <!-- <p v-else-if="error">Unable to fetch data. {{ error }}</p> -->
+  <v-container fluid>
+    <v-row>
+      <v-col
+        v-for="(countryGroup, index) in countryGroups"
+        :key="index"
+        xs="12"
+        md="3"
+        class="d-flex flex-wrap gx-8 ga-16"
+      >
+        <v-card v-for="country in countryGroup" :key="country.name.common">
+          <v-img
+            :width="300"
+            :height="180"
+            aspect-ratio="16/9"
+            cover
+            :alt="country.flags.alt"
+            :src="country.flags.png"
+          >
+          </v-img>
+          <h4>{{ country.name.common }}</h4>
+          <p>Population: {{ country.population }}</p>
+          <p>Region: {{ country.region }}</p>
+          <p>Capital: {{ country.capital }}</p>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup lang="ts">
-// async function Test() {
-//   const result = await fetch("https://restcountries.com/v3.1/all");
-//   const all = await result.json();
-//   console.log(all);
-//   return all;
-// }
-// const { result } = useFetch(Test);
+import { ref, onMounted } from "vue";
 
-const { data: countries } = await useFetch(
-  "https://restcountries.com/v3.1/all"
-);
+const countries = ref([]);
+const countryGroups = ref([[], [], [], []]);
 
+const fetchCountries = async () => {
+  const response = await fetch("https://restcountries.com/v3.1/all");
+  const allCountries = await response.json();
+  countries.value = allCountries;
+  const group = Math.ceil(allCountries.length / 4);
+  for (let i = 0; i < 4; i++) {
+    countryGroups.value[i] = allCountries.slice(i * group, (i + 1) * group);
+  }
+};
+
+onMounted(fetchCountries);
+
+console.log(countries);
 // Log the result whenever it changes
 </script>

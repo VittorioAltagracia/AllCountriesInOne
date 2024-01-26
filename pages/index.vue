@@ -1,4 +1,5 @@
 <template>
-  <h1>Index page</h1>
+  <SearchBar />
+  <FilterDropdown />
   <ListOfCountries />
 </template>
