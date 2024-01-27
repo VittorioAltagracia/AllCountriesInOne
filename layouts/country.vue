@@ -1,6 +1,6 @@
 <template>
   <div>
-    <country />
+    <nav-bar />
     <slot />
   </div>
 </template>

@@ -1,5 +1,7 @@
-<template>
-  <SearchBar />
-  <FilterDropdown />
-  <ListOfCountries />
-</template>
+<template></template>
+
+<script setup lang="ts">
+definePageMeta({
+  layout: "default",
+});
+</script>

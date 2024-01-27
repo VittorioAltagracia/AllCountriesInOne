@@ -6,22 +6,24 @@
         :key="index"
         xs="12"
         md="3"
-        class="d-flex flex-wrap gx-8 ga-16"
+        class="d-flex flex-wrap"
       >
         <v-card v-for="country in countryGroup" :key="country.name.common">
-          <v-img
-            :width="300"
-            :height="180"
-            aspect-ratio="16/9"
-            cover
-            :alt="country.flags.alt"
-            :src="country.flags.png"
-          >
-          </v-img>
-          <h4>{{ country.name.common }}</h4>
-          <p>Population: {{ country.population }}</p>
-          <p>Region: {{ country.region }}</p>
-          <p>Capital: {{ country.capital }}</p>
+          <NuxtLink :to="`/${country.name.common}`">
+            <v-img
+              :width="350"
+              :height="190"
+              aspect-ratio="16/9"
+              cover
+              :alt="country.flags.alt"
+              :src="country.flags.png"
+            >
+            </v-img>
+            <h4>{{ country.name.common }}</h4>
+            <p>Population: {{ country.population }}</p>
+            <p>Region: {{ country.region }}</p>
+            <p>Capital: {{ country.capital }}</p>
+          </NuxtLink>
         </v-card>
       </v-col>
     </v-row>
